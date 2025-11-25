@@ -46,7 +46,7 @@
           class="btn btn-ghost btn-circle avatar"
         >
           <div class="w-10 rounded-full">
-            <img src="/profile.svg" alt="User" />
+            <Icon icon="line-md:account" class="w-8 h-8" />
           </div>
         </button>
         <ul
@@ -62,6 +62,8 @@
   </header>
 </template>
 <script setup>
+import { Icon } from "@iconify/vue/dist/iconify.js";
+
 defineProps({
   isDark: {
     type: Boolean,

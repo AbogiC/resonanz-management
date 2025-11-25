@@ -7,53 +7,59 @@
     >
       Create New Sheet Music
     </button>
-    <table class="min-w-full table-auto border-collapse border border-gray-300">
-      <thead>
-        <tr class="bg-gray-100 dark:bg-gray-700">
-          <th class="border border-gray-300 px-4 py-2">Title</th>
-          <th class="border border-gray-300 px-4 py-2">Composer</th>
-          <th class="border border-gray-300 px-4 py-2">Genre</th>
-          <th class="border border-gray-300 px-4 py-2">Link</th>
-          <th class="border border-gray-300 px-4 py-2">Actions</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr
-          v-for="item in sheetMusic"
-          :key="item.id"
-          class="hover:bg-gray-50 dark:hover:bg-gray-600"
-        >
-          <td class="border border-gray-300 px-4 py-2">{{ item.title }}</td>
-          <td class="border border-gray-300 px-4 py-2">{{ item.composer }}</td>
-          <td class="border border-gray-300 px-4 py-2">{{ item.genre }}</td>
-          <td class="border border-gray-300 px-4 py-2">
-            <a
-              v-if="item.link"
-              :href="item.link"
-              target="_blank"
-              class="text-blue-500 hover:text-blue-700 underline"
-            >
-              View
-            </a>
-            <span v-else>-</span>
-          </td>
-          <td class="border border-gray-300 px-4 py-2">
-            <button
-              @click="openEditModal(item.id)"
-              class="bg-yellow-500 text-white px-2 py-1 rounded mr-2"
-            >
-              Edit
-            </button>
-            <button
-              @click="deleteItem(item.id)"
-              class="bg-red-500 text-white px-2 py-1 rounded"
-            >
-              Delete
-            </button>
-          </td>
-        </tr>
-      </tbody>
-    </table>
+    <div class="overflow-y-auto max-h-96">
+      <table
+        class="min-w-full table-auto border-collapse border border-gray-300"
+      >
+        <thead class="sticky top-0 bg-gray-100 dark:bg-gray-700">
+          <tr>
+            <th class="border border-gray-300 px-4 py-2">Title</th>
+            <th class="border border-gray-300 px-4 py-2">Composer</th>
+            <th class="border border-gray-300 px-4 py-2">Genre</th>
+            <th class="border border-gray-300 px-4 py-2">Link</th>
+            <th class="border border-gray-300 px-4 py-2">Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr
+            v-for="item in sheetMusic"
+            :key="item.id"
+            class="hover:bg-gray-50 dark:hover:bg-gray-600"
+          >
+            <td class="border border-gray-300 px-4 py-2">{{ item.title }}</td>
+            <td class="border border-gray-300 px-4 py-2">
+              {{ item.composer }}
+            </td>
+            <td class="border border-gray-300 px-4 py-2">{{ item.genre }}</td>
+            <td class="border border-gray-300 px-4 py-2">
+              <a
+                v-if="item.link"
+                :href="item.link"
+                target="_blank"
+                class="text-blue-500 hover:text-blue-700 underline"
+              >
+                View
+              </a>
+              <span v-else>-</span>
+            </td>
+            <td class="border border-gray-300 px-4 py-2">
+              <button
+                @click="openEditModal(item.id)"
+                class="px-2 py-1 rounded mr-2 cursor-pointer"
+              >
+                <Icon icon="line-md:edit" class="h-5 w-5" />
+              </button>
+              <button
+                @click="deleteItem(item.id)"
+                class="px-2 py-1 rounded mr-2 cursor-pointer"
+              >
+                <Icon icon="line-md:document-delete" class="h-5 w-5" />
+              </button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
 
     <!-- Modal for creating new sheet music -->
     <div
