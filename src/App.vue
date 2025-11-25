@@ -8,16 +8,9 @@
         @toggle-drawer="toggleDrawer"
         @toggle-theme="toggleTheme"
       />
-      <!-- Main conten -->
+      <!-- Main content -->
       <main class="flex-1 p-6 bg-base-200 dark:bg-backgroundDark">
-        <StatsCards />
-        <Charts />
-
-        <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
-         <RecentOrders class="lg:col-span-2" />
-         <RecentActivity />
-        </div>
-        <StackedBarChart class="mt-6" />
+        <router-view />
       </main>
     </div>
 
@@ -28,11 +21,6 @@
 import { onMounted, ref, watchEffect } from "vue";
 import Navbar from "./components/Navbar.vue";
 import Sidebar from "./components/Sidebar.vue";
-import StatsCards from "./components/StatsCards.vue";
-import Charts from "./components/Charts.vue";
-import RecentOrders from "./components/RecentOrders.vue";
-import RecentActivity from "./components/RecentActivity.vue";
-import StackedBarChart from "./components/StackedBarChart.vue";
 const isDark = ref(true);
 
 onMounted(() => {

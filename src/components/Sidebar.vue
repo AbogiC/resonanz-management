@@ -17,9 +17,30 @@
 
       <ul role="menu">
         <li role="none" class="p-2" v-for="(link, index) in links" :key="index">
-          <button
+          <router-link
+            v-if="link.route"
+            :to="link.route"
             role="menuitem"
-            :aria-expanded="!!links.children && links.open"
+            :aria-expanded="!!link.children && link.open"
+            :aria-haspopup="!!link.children"
+            :class="{ active: link.active }"
+            @click="setActive(index)"
+            class="flex items-center w-full text-left hover:bg-gray-100 dark:hover:bg-white/10 text-black dark:text-white"
+          >
+            <Icon :icon="link.icon" class="h-5 w-5" />
+            <span class="ml-2">{{ link.name }}</span>
+            <span v-if="link.children" class="ml-auto dropdown-icon">
+              <Icon
+                :icon="
+                  link.open ? 'line-md:chevron-down ' : 'line-md:chevron-right'
+                "
+              />
+            </span>
+          </router-link>
+          <button
+            v-else
+            role="menuitem"
+            :aria-expanded="!!link.children && link.open"
             :aria-haspopup="!!link.children"
             :class="{ active: link.active }"
             @click="setActive(index)"
@@ -61,12 +82,21 @@ const links = ref([
     icon: "line-md:home",
     active: true,
     open: false,
+    route: "/",
+  },
+  {
+    name: "Sheet Music",
+    icon: "akar-icons:book",
+    active: false,
+    open: false,
+    route: "/sheet-music",
   },
   {
     name: "Analytics",
     icon: "icon-park-outline:chart-line",
     active: false,
     open: false,
+    route: "/analytics",
   },
   {
     name: "Reports",
@@ -79,6 +109,7 @@ const links = ref([
     icon: "line-md:account",
     active: false,
     open: true,
+    route: "/users",
     children: [
       { name: "All Users" },
       { name: "Add New" },
