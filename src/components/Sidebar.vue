@@ -92,31 +92,6 @@ const links = ref([
     route: "/sheet-music",
   },
   {
-    name: "Analytics",
-    icon: "icon-park-outline:chart-line",
-    active: false,
-    open: false,
-    route: "/analytics",
-  },
-  {
-    name: "Reports",
-    icon: "line-md:document-list",
-    active: false,
-    open: false,
-  },
-  {
-    name: "Users",
-    icon: "line-md:account",
-    active: false,
-    open: true,
-    route: "/users",
-    children: [
-      { name: "All Users" },
-      { name: "Add New" },
-      { name: "Roles & Permissions" },
-    ],
-  },
-  {
     name: "Products",
     icon: "mdi:shopping-outline",
     active: false,
@@ -126,12 +101,6 @@ const links = ref([
       { name: "Categories" },
       { name: "Inventory" },
     ],
-  },
-  {
-    name: "Messages",
-    icon: "line-md:email",
-    active: false,
-    open: false,
   },
   {
     name: "Settings",
