@@ -7,6 +7,19 @@
     >
       Create New Sheet Music
     </button>
+    <input
+      type="file"
+      accept=".xlsx,.xls"
+      @change="handleFileUpload"
+      ref="fileInput"
+      style="display: none"
+    />
+    <button
+      @click="$refs.fileInput.click()"
+      class="bg-green-500 text-white px-4 py-2 rounded mb-4 ml-2"
+    >
+      Upload Excel
+    </button>
     <div class="overflow-y-auto max-h-96">
       <table
         class="min-w-full table-auto border-collapse border border-gray-300"
@@ -271,6 +284,7 @@
 
 <script setup>
 import { ref, onMounted } from "vue";
+import * as XLSX from "xlsx";
 import {
   getAllSheetMusic,
   createSheetMusic,
@@ -296,6 +310,7 @@ const editItem = ref({
   link: "",
   quantity: 1,
 });
+const fileInput = ref(null);
 
 const fetchSheetMusic = async () => {
   try {
@@ -363,6 +378,45 @@ const deleteItem = async (id) => {
   } catch (error) {
     console.error("Error deleting sheet music:", error);
   }
+};
+
+const handleFileUpload = async (event) => {
+  const file = event.target.files[0];
+  if (!file) return;
+
+  const reader = new FileReader();
+  reader.onload = async (e) => {
+    try {
+      const data = new Uint8Array(e.target.result);
+      const workbook = XLSX.read(data, { type: "array" });
+      const sheetName = workbook.SheetNames[0];
+      const worksheet = workbook.Sheets[sheetName];
+      const jsonData = XLSX.utils.sheet_to_json(worksheet, { header: 1 });
+
+      // Assume first row is headers: title, composer, genre, link, quantity
+      for (let i = 1; i < jsonData.length; i++) {
+        const row = jsonData[i];
+        if (row.length >= 5) {
+          const sheetData = {
+            title: row[0] || "",
+            composer: row[1] || "",
+            genre: row[2] || "",
+            link: row[3] || "",
+            quantity: parseInt(row[4]) || 1,
+          };
+          const newItem = await createSheetMusic(sheetData);
+          sheetMusic.value.push(newItem);
+        }
+      }
+      alert("Excel data uploaded successfully!");
+    } catch (error) {
+      console.error("Error processing Excel file:", error);
+      alert("Error uploading Excel file. Please check the file format.");
+    }
+  };
+  reader.readAsArrayBuffer(file);
+  // Reset file input
+  event.target.value = "";
 };
 
 onMounted(() => {
