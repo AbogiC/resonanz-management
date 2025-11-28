@@ -20,42 +20,33 @@
     >
       Upload Excel
     </button>
-    <div class="overflow-y-auto max-h-96">
-      <table
-        class="min-w-full table-auto border-collapse border border-gray-300"
-      >
-        <thead class="sticky top-0 bg-gray-100 dark:bg-gray-700">
+    <div class="overflow-x-auto">
+      <table class="table">
+        <thead>
           <tr>
-            <th class="border border-gray-300 px-4 py-2">Title</th>
-            <th class="border border-gray-300 px-4 py-2">Composer</th>
-            <th class="border border-gray-300 px-4 py-2">Genre</th>
-            <th class="border border-gray-300 px-4 py-2">Link</th>
-            <th class="border border-gray-300 px-4 py-2">Actions</th>
+            <th>Title</th>
+            <th>Composer</th>
+            <th>Genre</th>
+            <th>Link</th>
+            <th>Actions</th>
           </tr>
         </thead>
         <tbody>
-          <tr
-            v-for="item in sheetMusic"
-            :key="item.id"
-            class="hover:bg-gray-50 dark:hover:bg-gray-600"
-          >
-            <td class="border border-gray-300 px-4 py-2">{{ item.title }}</td>
-            <td class="border border-gray-300 px-4 py-2">
-              {{ item.composer }}
-            </td>
-            <td class="border border-gray-300 px-4 py-2">{{ item.genre }}</td>
-            <td class="border border-gray-300 px-4 py-2">
+          <tr v-for="item in sheetMusic" :key="item.id">
+            <td>{{ item.title }}</td>
+            <td>{{ item.composer }}</td>
+            <td>{{ item.genre }}</td>
+            <td>
               <a
                 v-if="item.link"
                 :href="item.link"
                 target="_blank"
                 class="text-blue-500 hover:text-blue-700 underline"
               >
-                View
-              </a>
-              <span v-else>-</span>
+                View </a
+              ><span v-else>-</span>
             </td>
-            <td class="border border-gray-300 px-4 py-2">
+            <td>
               <button
                 @click="openEditModal(item.id)"
                 class="px-2 py-1 rounded mr-2 cursor-pointer"
@@ -77,14 +68,15 @@
     <!-- Modal for creating new sheet music -->
     <div
       v-if="showModal"
-      class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50"
+      class="fixed inset-0 flex items-center justify-center z-50"
+      style="background-color: rgba(0, 0, 0, 0.5)"
     >
-      <div class="bg-white p-6 rounded-lg shadow-lg w-96">
+      <div class="bg-white dark:bg-gray-800 p-6 rounded-lg shadow-lg w-96">
         <h2 class="text-xl font-bold mb-4">Create New Sheet Music</h2>
         <form @submit.prevent="submitCreate">
           <div class="mb-4">
             <label
-              class="block text-gray-700 text-sm font-bold mb-2"
+              class="block text-gray-700 dark:text-gray-300 text-sm font-bold mb-2"
               for="title"
             >
               Title
@@ -93,13 +85,13 @@
               v-model="newItem.title"
               type="text"
               id="title"
-              class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+              class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 dark:text-gray-300 leading-tight focus:outline-none focus:shadow-outline"
               required
             />
           </div>
           <div class="mb-4">
             <label
-              class="block text-gray-700 text-sm font-bold mb-2"
+              class="block text-gray-700 dark:text-gray-300 text-sm font-bold mb-2"
               for="composer"
             >
               Composer
@@ -108,13 +100,13 @@
               v-model="newItem.composer"
               type="text"
               id="composer"
-              class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+              class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 dark:text-gray-300 leading-tight focus:outline-none focus:shadow-outline"
               required
             />
           </div>
           <div class="mb-4">
             <label
-              class="block text-gray-700 text-sm font-bold mb-2"
+              class="block text-gray-700 dark:text-gray-300 text-sm font-bold mb-2"
               for="genre"
             >
               Genre
@@ -123,13 +115,13 @@
               v-model="newItem.genre"
               type="text"
               id="genre"
-              class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+              class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 dark:text-gray-300 leading-tight focus:outline-none focus:shadow-outline"
               required
             />
           </div>
           <div class="mb-4">
             <label
-              class="block text-gray-700 text-sm font-bold mb-2"
+              class="block text-gray-700 dark:text-gray-300 text-sm font-bold mb-2"
               for="link"
             >
               Link
@@ -138,13 +130,13 @@
               v-model="newItem.link"
               type="url"
               id="link"
-              class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+              class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 dark:text-gray-300 leading-tight focus:outline-none focus:shadow-outline"
               placeholder="https://example.com"
             />
           </div>
           <div class="mb-4">
             <label
-              class="block text-gray-700 text-sm font-bold mb-2"
+              class="block text-gray-700 dark:text-gray-300 text-sm font-bold mb-2"
               for="quantity"
             >
               Quantity
@@ -154,7 +146,7 @@
               type="number"
               id="quantity"
               min="1"
-              class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+              class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 dark:text-gray-300 leading-tight focus:outline-none focus:shadow-outline"
               required
             />
           </div>
